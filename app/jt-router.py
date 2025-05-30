@@ -17,16 +17,30 @@ async def handle_webhook(request: Request):
     print(data)
 
     if notification_type == 'PlaybackStart':
-        message = (
-            f"▶️ {data.get('SeriesName')} - S{data.get('SeasonNumber00')}E{data.get('EpisodeNumber00')} - {data.get('Name')}\n"
+        
+        message = ""
+        
+        if data.get('ItemType') == 'Episode':
+            message = f"▶️ {data.get('SeriesName')} - S{data.get('SeasonNumber00')}E{data.get('EpisodeNumber00')} - {data.get('Name')}\n"
+        else:
+            message = f"▶️ {data.get('Name')}\n"
+        
+        message = message + (
             f"👤 {data.get('NotificationUsername')}\n"
             f"🖥️ {data.get('DeviceName')}\n"
             f"🐵 {data.get('ClientName')}\n"
             f"🚀 {data.get('PlayMethod')}"
         )
     elif notification_type == 'PlaybackStop':
-        message = (
-            f"⏹️ {data.get('SeriesName')} - S{data.get('SeasonNumber00')}E{data.get('EpisodeNumber00')} - {data.get('Name')}\n"
+
+        message = ""
+
+        if data.get('ItemType') == 'Episode':
+            message = f"⏹️ {data.get('SeriesName')} - S{data.get('SeasonNumber00')}E{data.get('EpisodeNumber00')} - {data.get('Name')}\n"
+        else:
+            message = f"⏹️ {data.get('Name')}\n"
+
+        message = message + (
             f"👤 {data.get('NotificationUsername')}\n"
             f"🖥️ {data.get('DeviceName')}\n"
             f"🐵 {data.get('ClientName')}"
